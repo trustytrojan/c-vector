@@ -34,7 +34,7 @@ typedef struct {
 // general purpose
 vector* vector_new();
 void vector_free(vector* v);
-void vector_realloc(vector* v);
+void vector_grow(vector* v);
 void vector_print(vector* v);
 
 // vector_push
