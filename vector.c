@@ -7,6 +7,7 @@ vector* vector_new() {
     .capacity = INITIAL_SIZE,
     .data = malloc(INITIAL_SIZE*sizeof(vector_element))
   };
+  return v;
 }
 
 void vector_free(vector* v) {
@@ -21,7 +22,7 @@ void vector_grow(vector* v) {
 
 void vector_print(vector* v) {
   printf("[ ");
-  for(int i = 0; i < v->size; ++i) {
+  for(size_t i = 0; i < v->size; ++i) {
     const vector_element el = v->data[i];
     switch(el.type) {
       case _int: printf("%d", el.value.i); break;
@@ -43,7 +44,7 @@ void vector_print(vector* v) {
 
 void vector_print_types(vector* v) {
   printf("[ ");
-  for(int i = 0; i < v->size; ++i) {
+  for(size_t i = 0; i < v->size; ++i) {
     const vector_element el = v->data[i];
     switch(el.type) {
       case _int: printf("(int) %d", el.value.i); break;
@@ -52,7 +53,7 @@ void vector_print_types(vector* v) {
       case _lf: printf("(double) %lf", el.value.lf); break;
       case _bool: printf("(bool) %s", (el.value.b) ? "true" : "false"); break;
       case _char: printf("(char) '%c'", el.value.c); break;
-      case _string: printf("(char* %p) \"%s\"", el.value.s); break;
+      case _string: printf("(char* %p) \"%s\"", el.value.s, el.value.s); break;
       case _ptr: printf("(void*) %p", el.value.p);
     }
     if(i < v->size-1)
