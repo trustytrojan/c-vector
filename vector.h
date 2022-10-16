@@ -2,49 +2,39 @@
 #define VECTOR
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdarg.h>
 
 #define INITIAL_SIZE 8
 
 typedef union {
-  int i;
-  unsigned long lu;
-  float f;
-  double lf;
-  bool b;
-  char c;
-  char* s;
+  long i;
+  unsigned long u;
+  double f;
   void* p;
-} element_data;
+} v_eldata;
 
-typedef enum { _int, _lu, _float, _lf, _bool, _char, _string, _ptr } element_type;
+typedef enum { _int, _uint, _float, _double, _bool, _char, _string, _ptr } v_eltype;
 
 typedef struct {
-  element_type type;
-  element_data value;
-} vector_element;
+  v_eltype type;
+  v_eldata value;
+} v_element;
 
 typedef struct {
   size_t size;
   size_t capacity;
-  vector_element* data;
+  v_element* data;
 } vector;
 
-// general purpose
-vector* vector_new();
-void vector_free(vector* v);
-void vector_grow(vector* v);
-void vector_print(vector* v);
+vector* v_new();
+void v_free(vector* v);
+void v_grow(vector* v);
+void v_shrink(vector* v);
+void v_print(vector* v);
+void v_printtypes(vector* v);
 
-// vector_push
-void vector_push_int(vector* v, int element);
-void vector_push_lu(vector* v, unsigned long element);
-void vector_push_float(vector* v, float element);
-void vector_push_lf(vector* v, double element);
-void vector_push_bool(vector* v, bool element);
-void vector_push_char(vector* v, char element);
-void vector_push_str(vector* v, char* element);
-void vector_push_ptr(vector* v, void* element);
+void v_push(vector* v, v_eltype type, ...);
 
 #endif

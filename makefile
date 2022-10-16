@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O2
+CFLAGS = -Wall -Wextra -O2 -Wno-varargs -Werror
 OBJ_FILES = vector.o vector_push.o
-LIB_NAME = vector.a
+LIB_NAME = libvector.a
 
 default:
 	$(CC) $(CFLAGS) -c vector.c -o vector.o

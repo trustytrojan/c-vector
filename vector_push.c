@@ -1,41 +1,21 @@
 #include "vector.h"
 
-void vector_push_int(vector* v, int element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _int, .value = { .i = element } };
-}
-
-void vector_push_lu(vector* v, unsigned long element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _lu, .value = { .lu = element } };
-}
-
-void vector_push_float(vector* v, float element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _float, .value = { .f = element } };
-}
-
-void vector_push_lf(vector* v, double element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _lf, .value = { .lf = element } };
-}
-
-void vector_push_bool(vector* v, bool element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _bool, .value = { .b = element } };
-}
-
-void vector_push_char(vector* v, char element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _char, .value = { .c = element } };
-}
-
-void vector_push_str(vector* v, char* element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _string, .value = { .s = element } };
-}
-
-void vector_push_ptr(vector* v, void* element) {
-  vector_grow(v);
-  v->data[v->size++] = (vector_element){ .type = _ptr, .value = { .s = element } };
+// only accepts one element to push into vector
+void v_push(vector* v, v_eltype type, ...) {
+  v_element el;
+  va_list args;
+  va_start(args, 1);
+  switch(el.type = type) {
+    case _int: el.value.i = va_arg(args, int); break;
+    case _uint: el.value.u = va_arg(args, unsigned long); break;
+    case _float:
+    case _double: el.value.f = va_arg(args, double); break;
+    case _bool: el.value.u = va_arg(args, int); break;
+    case _char: el.value.u = va_arg(args, int); break;
+    case _string: el.value.p = va_arg(args, char*); break;
+    case _ptr: el.value.p = va_arg(args, void*); break;
+    default:
+  }
+  va_end(args);
+  v->data[v->size++] = el;
 }
