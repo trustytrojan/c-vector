@@ -1,21 +1,48 @@
 #include "vector.h"
 
-// only accepts one element to push into vector
-void v_push(vector* v, v_eltype type, ...) {
-  v_element el;
+void v_push_i(vector* v, v_eltype type, long element) {
+  v_grow(v);
+  v->data[v->size++] = (v_element){ .type = type, .value = { .i = element } };
+}
+
+void v_push_f(vector* v, v_eltype type, double element) {
+  v_grow(v);
+  v->data[v->size++] = (v_element){ .type = type, .value = { .f = element } };
+}
+
+void v_push(vector* v, const char* types, ...) {
   va_list args;
-  va_start(args, 1);
-  switch(el.type = type) {
-    case _int: el.value.i = va_arg(args, int); break;
-    case _uint: el.value.u = va_arg(args, unsigned long); break;
-    case _float:
-    case _double: el.value.f = va_arg(args, double); break;
-    case _bool: el.value.u = va_arg(args, int); break;
-    case _char: el.value.u = va_arg(args, int); break;
-    case _string: el.value.p = va_arg(args, char*); break;
-    case _ptr: el.value.p = va_arg(args, void*); break;
-    default:
+  const int len = strlen(types);
+  int n_types = 0;
+  for(int i = 0; i < len; ++i) {
+    if(types[i] == '%')
+      ++n_types;
+  }
+  va_start(args, n_types);
+  for(int i = 0; i < len; ++i) {
+    if(types[i] == '%')
+      switch(types[i+1]) {
+        case 'b': v_push_i(v, _bool, va_arg(args, int)); break;
+        case 'f': v_push_f(v, _float, va_arg(args, double)); break;
+        case 'i':
+        case 'd': v_push_i(v, _int, va_arg(args, int)); break;
+        case 'l':
+          switch(types[i+2]) {
+            case 'u': v_push_i(v, _uint, va_arg(args, unsigned long)); break;
+            case 'f': v_push_f(v, _double, va_arg(args, double)); break;
+            case 'i': v_push_i(v, _int, va_arg(args, long));
+          }
+          break;
+        case 'u':
+          v_push_i(v, _uint, va_arg(args, unsigned));
+          break;
+        case 's':
+          v_push_i(v, _string, va_arg(args, unsigned long));
+          break;
+        case 'p':
+          v_push_i(v, _ptr, va_arg(args, unsigned long));
+          break;
+      }
   }
   va_end(args);
-  v->data[v->size++] = el;
 }

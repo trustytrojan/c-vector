@@ -25,16 +25,14 @@ void v_print(vector* v) {
   for(size_t i = 0; i < v->size; ++i) {
     const v_element el = v->data[i];
     switch(el.type) {
-      case _int: printf("%d", (int)el.value.i); break;
-      case _uint: printf("%lu", el.value.u); break;
+      case _int: printf("%ld", el.value.i); break;
+      case _uint: printf("%lu", (unsigned long)el.value.i); break;
       case _float:
       case _double: printf("%f", el.value.f); break;
-      case _bool: printf("%s", (el.value.u) ? "true" : "false"); break;
-      case _char: printf("'%c'", (char)el.value.u); break;
-      case _string: printf("\"%s\"", (char*)el.value.p); break;
-      case _ptr:
-        if(el.value.p) printf("%p", el.value.p);
-        else printf("NULL");
+      case _bool: printf("%s", (el.value.i) ? "true" : "false"); break;
+      case _char: printf("'%c'", (char)el.value.i); break;
+      case _string: printf("\"%s\"", (char*)el.value.i); break;
+      case _ptr: printf("%p", (void*)el.value.i);
     }
     if(i < v->size-1)
       printf(", ");
@@ -47,14 +45,14 @@ void v_print_types(vector* v) {
   for(size_t i = 0; i < v->size; ++i) {
     const v_element el = v->data[i];
     switch(el.type) {
-      case _int: printf("(int) %d", (int)el.value.i); break;
-      case _uint: printf("(long) %lu", el.value.u); break;
+      case _int: printf("(int) %ld", el.value.i); break;
+      case _uint: printf("(long) %lu", (unsigned long)el.value.i); break;
       case _float:
       case _double: printf("(double) %lf", el.value.f); break;
-      case _bool: printf("(bool) %s", (el.value.u) ? "true" : "false"); break;
-      case _char: printf("(char) '%c'", (char)el.value.u); break;
-      case _string: printf("(char* %p) \"%s\"", (char*)el.value.p, (char*)el.value.p); break;
-      case _ptr: printf("(void*) %p", el.value.p);
+      case _bool: printf("(bool) %s", (el.value.i) ? "true" : "false"); break;
+      case _char: printf("(char) '%c'", (char)el.value.i); break;
+      case _string: printf("(char* %p) \"%s\"", (char*)el.value.i, (char*)el.value.i); break;
+      case _ptr: printf("(void*) %p", (void*)el.value.i);
     }
     if(i < v->size-1)
       printf(", ");

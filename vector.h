@@ -2,17 +2,16 @@
 #define VECTOR
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdarg.h>
+#include <stdbool.h>
 
 #define INITIAL_SIZE 8
 
 typedef union {
   long i;
-  unsigned long u;
   double f;
-  void* p;
 } v_eldata;
 
 typedef enum { _int, _uint, _float, _double, _bool, _char, _string, _ptr } v_eltype;
@@ -35,6 +34,6 @@ void v_shrink(vector* v);
 void v_print(vector* v);
 void v_printtypes(vector* v);
 
-void v_push(vector* v, v_eltype type, ...);
+void v_push(vector* v, const char* types, ...);
 
 #endif
