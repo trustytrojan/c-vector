@@ -1,11 +1,7 @@
 #ifndef VECTOR
 #define VECTOR
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdbool.h>
 
 #define INITIAL_SIZE 8
 
@@ -32,7 +28,7 @@ void v_free(vector* v);
 void v_grow(vector* v);
 void v_shrink(vector* v);
 void v_print(vector* v);
-void v_printtypes(vector* v);
+void v_print_types(vector* v);
 
 void v_push(vector* v, const char* types, ...);
 
