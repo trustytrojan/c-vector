@@ -27,6 +27,7 @@ vector* v_new();
 void v_free(vector* v);
 void v_grow(vector* v);
 void v_shrink(vector* v);
+void v_foreach(vector* v, void func(v_element*));
 void v_print(vector* v);
 void v_print_types(vector* v);
 
