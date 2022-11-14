@@ -25,6 +25,12 @@ void v_grow(vector* v) {
     v->data = realloc(v->data, (v->capacity *= 1.5));
 }
 
+// func must accept a v_element* as its only argument!!!
+void v_foreach(vector* v, void func(v_element*)) {
+  for(size_t i = 0; i < v->size; ++i)
+    func(v->data+i);
+}
+
 void v_print(vector* v) {
   printf("[ ");
   for(size_t i = 0; i < v->size; ++i) {
