@@ -1,3 +1,5 @@
+// Author: Tarun Rajan (github.com/trustytrojan)
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
