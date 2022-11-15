@@ -1,17 +1,14 @@
-// Author: Tarun Rajan
-// github.com/trustytrojan/c-vector
-
 #include <string.h>
 #include <stdarg.h>
 
 #include "vector.h"
 
-void v_push_i(vector* v, v_eltype type, long element) {
+void v_pushi(vector* v, v_eltype type, long element) {
   v_grow(v);
   v->data[v->size++] = (v_element){ .type = type, .value = { .i = element } };
 }
 
-void v_push_f(vector* v, v_eltype type, double element) {
+void v_pushf(vector* v, v_eltype type, double element) {
   v_grow(v);
   v->data[v->size++] = (v_element){ .type = type, .value = { .f = element } };
 }
@@ -24,30 +21,30 @@ void v_push(vector* v, const char* types, ...) {
     if(types[i] == '%')
       ++n_types;
   }
-  va_start(args, n_types);
+  va_start(args, types);
   for(int i = 0; i < len; ++i) {
     if(types[i] != '%') continue;
     switch(types[i+1]) {
-      case 'b': v_push_i(v, _bool, va_arg(args, int)); break;
-      case 'f': v_push_f(v, _float, va_arg(args, double)); break;
+      case 'b': v_pushi(v, _bool, va_arg(args, int)); break;
+      case 'f': v_pushf(v, _float, va_arg(args, double)); break;
       case 'i':
-      case 'd': v_push_i(v, _int, va_arg(args, int)); break;
-      case 'c': v_push_i(v, _char, va_arg(args, int)); break;
+      case 'd': v_pushi(v, _int, va_arg(args, int)); break;
+      case 'c': v_pushi(v, _char, va_arg(args, int)); break;
       case 'l':
         switch(types[i+2]) {
-          case 'u': v_push_i(v, _uint, va_arg(args, unsigned long)); break;
-          case 'f': v_push_f(v, _double, va_arg(args, double)); break;
-          case 'i': v_push_i(v, _int, va_arg(args, long));
+          case 'u': v_pushi(v, _uint, va_arg(args, unsigned long)); break;
+          case 'f': v_pushf(v, _double, va_arg(args, double)); break;
+          case 'i': v_pushi(v, _int, va_arg(args, long));
         }
         break;
       case 'u':
-        v_push_i(v, _uint, va_arg(args, unsigned));
+        v_pushi(v, _uint, va_arg(args, unsigned));
         break;
       case 's':
-        v_push_i(v, _string, va_arg(args, unsigned long));
+        v_pushi(v, _string, va_arg(args, unsigned long));
         break;
       case 'p':
-        v_push_i(v, _ptr, va_arg(args, unsigned long));
+        v_pushi(v, _ptr, va_arg(args, unsigned long));
         break;
     }
   }

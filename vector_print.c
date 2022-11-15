@@ -1,6 +1,3 @@
-// Author: Tarun Rajan
-// github.com/trustytrojan/c-vector
-
 #include <stdio.h>
 
 #include "vector.h"

@@ -1,7 +1,5 @@
-// Author: Tarun Rajan
-// github.com/trustytrojan/c-vector
-
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "vector.h"
 
@@ -33,7 +31,25 @@ void v_free(vector* v) {
   free(v);
 }
 
+// internal use only - called when pushing or inserting elements
 void v_grow(vector* v) {
   if(v->size == v->capacity)
     v->data = realloc(v->data, (v->capacity *= 1.5));
+}
+
+// internal use only - called when popping or removing elements
+void v_shrink(vector* v) {
+  if(v->size == 0.75*v->capacity)
+    v->data = realloc(v->data, (v->capacity *= 0.75));
+}
+
+// increase or decrease your vector's capacity
+// returns pointer to new memory block (start of the array)
+// if capacity <= vector size, returns NULL
+v_element* v_realloc(vector* v, size_t capacity) {
+  if(capacity <= v->size) {
+    fprintf(stderr, "v_realloc: desired capacity must be more than vector size\n  desired capacity: %lu\n  current vector size: %lu\n", capacity, v->size);
+    return NULL;
+  }
+  return (v->data = realloc(v->data, (v->capacity = capacity)));
 }
