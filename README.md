@@ -1,8 +1,6 @@
 # c-vector
-general-purpose vector library in c. works with any data type!
+A dynamic array library in C. Can store any data type in just one vector.
 
-## still a work in progress
+## Goal
 
-wait for more functions to be implemented
-
-i need coffee
+To make a convenient data structure in C similar to the JavaScript array and the C++ vector at the same time.
