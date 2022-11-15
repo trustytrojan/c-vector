@@ -1,5 +1,5 @@
-// THIS IS MY OWN CODE!!!
-// https://github.com/trustytrojan/c-vector
+// Author: Tarun Rajan
+// github.com/trustytrojan/c-vector
 
 #include <string.h>
 #include <stdarg.h>
