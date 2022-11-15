@@ -1,74 +1,46 @@
-// Author: Tarun Rajan (github.com/trustytrojan)
+// THIS IS MY OWN CODE!!!
+// https://github.com/trustytrojan/c-vector
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
+#include <stdbool.h>
 
 #include "vector.h"
 
-vector* v_new() {
-  vector* v = malloc(sizeof(vector));
-  *v = (vector){
-    .size = 0,
-    .capacity = INITIAL_SIZE,
-    .data = malloc(INITIAL_SIZE*sizeof(v_element))
-  };
-  return v;
+bool out_of_bounds(vector* v, size_t index, const char* caller) {
+  if(index >= v->size) {
+    fprintf(stderr, "%s: index out of bounds: %ld\n  - vector size is %ld\n", caller, index, v->size);
+    return true;
+  }
+  return false;
 }
 
-void v_free(vector* v) {
-  free(v->data);
-  free(v);
+v_element* v_get(vector* v, size_t index) {
+  if(out_of_bounds(v, index, "v_get"))
+    return NULL;
+  return (v->data + index);
 }
 
-void v_grow(vector* v) {
-  if(v->size == v->capacity)
-    v->data = realloc(v->data, (v->capacity *= 1.5));
+void v_set(vector* v, size_t index, v_element to_set) {
+  if(out_of_bounds(v, index, "v_set"))
+    return;
+  v->data[index] = to_set;
+}
+
+bool v_element_equals(v_element a, v_element b) {
+  return (a.type == b.type) && (a.value.i == b.value.i || a.value.f == b.value.f);
+}
+
+// -1 returned if element not found
+size_t v_indexof(vector* v, v_element to_find) {
+  for(size_t i = 0; i < v->size; ++i)
+    if(v_element_equals(v->data[i], to_find)) {
+      return i;
+    }
+  return -1;
 }
 
 // func must accept a v_element* as its only argument!!!
 void v_foreach(vector* v, void func(v_element*)) {
   for(size_t i = 0; i < v->size; ++i)
     func(v->data+i);
-}
-
-void v_print(vector* v) {
-  printf("[ ");
-  for(size_t i = 0; i < v->size; ++i) {
-    const v_element el = v->data[i];
-    switch(el.type) {
-      case _int: printf("%ld", el.value.i); break;
-      case _uint: printf("%lu", (unsigned long)el.value.i); break;
-      case _float:
-      case _double: printf("%f", el.value.f); break;
-      case _bool: printf("%s", (el.value.i) ? "true" : "false"); break;
-      case _char: printf("'%c'", (char)el.value.i); break;
-      case _string: printf("\"%s\"", (char*)el.value.i); break;
-      case _ptr: printf("%p", (void*)el.value.i);
-    }
-    if(i < v->size-1)
-      printf(", ");
-  }
-  printf(" ]\n");
-}
-
-void v_print_types(vector* v) {
-  printf("[ ");
-  for(size_t i = 0; i < v->size; ++i) {
-    const v_element el = v->data[i];
-    switch(el.type) {
-      case _int: printf("(int) %ld", el.value.i); break;
-      case _uint: printf("(long) %lu", (unsigned long)el.value.i); break;
-      case _float:
-      case _double: printf("(double) %lf", el.value.f); break;
-      case _bool: printf("(bool) %s", (el.value.i) ? "true" : "false"); break;
-      case _char: printf("(char) '%c'", (char)el.value.i); break;
-      case _string: printf("(char* %p) \"%s\"", (char*)el.value.i, (char*)el.value.i); break;
-      case _ptr: printf("(void*) %p", (void*)el.value.i);
-    }
-    if(i < v->size-1)
-      printf(", ");
-  }
-  printf(" ]\n");
 }

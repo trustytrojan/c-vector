@@ -1,3 +1,6 @@
+// THIS IS MY OWN CODE!!!
+// https://github.com/trustytrojan/c-vector
+
 #include <string.h>
 #include <stdarg.h>
 

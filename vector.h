@@ -1,9 +1,12 @@
-#ifndef VECTOR
-#define VECTOR
+// THIS IS MY OWN CODE!!!
+// https://github.com/trustytrojan/c-vector
+
+#ifndef vector_h
+#define vector_h
 
 #include <stdlib.h>
 
-#define INITIAL_SIZE 8
+#define INITIAL_CAPACITY 8
 
 typedef union {
   long i;
@@ -23,14 +26,24 @@ typedef struct {
   v_element* data;
 } vector;
 
+// vector_mem.c
 vector* v_new();
 void v_free(vector* v);
 void v_grow(vector* v);
-void v_shrink(vector* v);
+vector* v_copy(vector* v);
+//void v_shrink(vector* v);
+
+// vector.c
+v_element* v_get(vector* v, size_t index);
+void v_set(vector* v, size_t index, v_element to_set);
 void v_foreach(vector* v, void func(v_element*));
+
+// vector_print.c
 void v_print(vector* v);
 void v_print_types(vector* v);
+void v_debug(vector* v);
 
+// vector_push.c
 void v_push(vector* v, const char* types, ...);
 
 #endif
