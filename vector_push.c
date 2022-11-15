@@ -3,14 +3,16 @@
 
 #include "vector.h"
 
-void v_pushi(vector* v, v_eltype type, long element) {
+// internal use only
+void v_pushi(vector* v, v_eltype type, long data) {
   v_grow(v);
-  v->data[v->size++] = (v_element){ .type = type, .value = { .i = element } };
+  v->data[v->size++] = (v_element){ .type = type, .value = { .i = data } };
 }
 
-void v_pushf(vector* v, v_eltype type, double element) {
+// internal use only
+void v_pushf(vector* v, v_eltype type, double data) {
   v_grow(v);
-  v->data[v->size++] = (v_element){ .type = type, .value = { .f = element } };
+  v->data[v->size++] = (v_element){ .type = type, .value = { .f = data } };
 }
 
 void v_push(vector* v, const char* types, ...) {

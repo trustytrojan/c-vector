@@ -30,7 +30,7 @@ void v_print(vector* v) {
   printf(" ]\n");
 }
 
-void v_print_types(vector* v) {
+void v_printtypes(vector* v) {
   printf("[ ");
   for(size_t i = 0; i < v->size; ++i) {
     const v_element el = v->data[i];

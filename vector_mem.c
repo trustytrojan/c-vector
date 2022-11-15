@@ -3,6 +3,13 @@
 
 #include "vector.h"
 
+/** 
+ * POSSIBLE TODO:
+ * rewrite memory model to surround the internal array with extra 
+ * allocated memory to make insertions and deletions at the front
+ * of the array constant time operations
+*/
+
 vector* v_new() {
   vector* v = malloc(sizeof(vector));
   *v = (vector){

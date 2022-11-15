@@ -25,7 +25,7 @@ v_element* v_set(vector* v, size_t index, v_element to_set) {
   return (v->data + index);
 }
 
-// internal use only (for the time being)
+// internal use only
 bool v_element_equals(v_element a, v_element b) {
   return (a.type == b.type) && (a.value.i == b.value.i || a.value.f == b.value.f);
 }

@@ -46,7 +46,7 @@ void v_foreach(vector* v, void func(v_element*));
 // vector_print.c
 
 void v_print(vector* v);
-void v_print_types(vector* v);
+void v_printtypes(vector* v);
 void v_debug(vector* v);
 
 
